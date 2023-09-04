@@ -1,2 +1,2 @@
-# kineticplasma-HPC
+# pic-HPC
 This repository houses high-performance Particle-In-Cell (PIC) codes that simulate a plasma from a kinetic perspective. This is in contrast to a fluid point of view where the plasma is viewed as a continuum that is being governed by magnetohydrodynamic equations. Performant code is achieved by implementing a binary search for finding the particles, and a sparse matrix solver for computing the field. 
