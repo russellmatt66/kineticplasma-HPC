@@ -1,5 +1,5 @@
-#ifndef GRID_H
-#define GRID_H
+#ifndef GRID_DEBUG_H
+#define GRID_DEBUG_H
 
 #include <vector>
 

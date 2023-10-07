@@ -1,5 +1,5 @@
-#ifndef PARTICLES_H
-#define PARTICLES_H
+#ifndef PARTICLES_DEBUG_H
+#define PARTICLES_DEBUG_H
 
 #include <vector>
 
