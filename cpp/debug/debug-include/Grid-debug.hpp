@@ -11,15 +11,19 @@ class Grid1d1v{
 
         const size_t getNx() const { return Nx_; }
 
+        const double Xgrid(size_t j) const { return x_grid[j]; }
         const double RhoX(size_t j) const { return rho_x[j]; }
         const double EX(size_t j) const { return E_x[j]; }
 
+        double& Xgrid(size_t j) { return x_grid[j]; }
         double& RhoX(size_t j) { return rho_x[j]; }
         double& EX(size_t j) { return E_x[j]; }
 
+        const std::vector<double>& getXgrid() const { return x_grid; }
         const std::vector<double>& getRhoX() const { return rho_x; }
         const std::vector<double>& getEX() const { return E_x; }
 
+        std::vector<double>& getXgrid() { return x_grid; }
         std::vector<double>& getRhoX() { return rho_x; }
         std::vector<double>& getEX() { return E_x; }
 
