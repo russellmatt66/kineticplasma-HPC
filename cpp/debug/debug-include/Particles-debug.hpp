@@ -11,6 +11,7 @@ class ParticleSpecies1d1v{
         {}
 
         const size_t getParticleNum() const { return N_; }
+        const double getParticleQ() const { return Q_; }
         
         // Element-wise accessor methods
         const double ParticleX(size_t i) const { return particle_x[i]; }
