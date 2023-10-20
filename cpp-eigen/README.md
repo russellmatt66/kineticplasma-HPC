@@ -12,6 +12,8 @@ g++ -o main main.cpp -I path/to/eigen
 - vflag: assignment flag for velocity initialization with N = 2 particles (0 or 1)
 
 # Overview
-This code is largely obsolete, and should not be considered anything more than a proof-of-concept. It possesses no build system, takes command-line input instead of a .inp file, uses .csv files to collect the data, and a mountain of Python spaghetti to process it. For a modern version, that is currently under development, look inside the `cpp-petsc/` directory. 
+This code is largely obsolete, and should not be considered anything more than a proof-of-concept. 
+
+It possesses no build system, takes command-line input instead of a .inp file, uses .csv files to collect the data, and a mountain of Python spaghetti to process it. For a modern version, that is currently under development, look inside the `cpp-petsc/` directory. 
 
 This is the version of the high-performance 1D1V PIC code that uses Eigen to perform a sparse solve of the electrostatic field, as mentioned in the README of the root directory for this repository. To read a description of the PIC algorithm, look inside the file "SP23\_AA545\_ComputerProject1_2.pdf". 
