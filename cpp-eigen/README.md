@@ -1,5 +1,5 @@
 # Run Instructions:
-The C++ library 'Eigen' is required to run this code. It was developed on v3.4.0 so this is preferred, but other versions should work. 
+The C++ library 'Eigen' is required to run this code. It was developed on v3.4.0 so this is preferred, but hopefully other versions work. 
 The library must be provided to the compiler at compile-time by running the command below,
 
 g++ -o main main.cpp -I path/to/eigen  
