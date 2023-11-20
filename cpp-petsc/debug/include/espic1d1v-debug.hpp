@@ -42,12 +42,12 @@ void ParticleWeight(size_t W, ParticleSpecies1d1v &PS, Grid1d1v &Grid){
     size_t Nx = Grid.getNx(), N = PS.getParticleNum();
     const double dx = (Grid.Xgrid(Nx - 1) - Grid.Xgrid(0)) / (Grid.Xgrid(Nx - 1));
     const double Q_particle = PS.getParticleQ();
-    for (size_t ii = 0; ii < N;; ii+){
+    for (size_t ii = 0; ii < N; ii++){
         j_left = findParticle(PS.ParticleX(ii), Grid.getXgrid());
         PS.XFound(ii) = j_left;
         j_right = j_left + 1;
-        dist_left = fabs(PS.getParticleX(ii) - Grid.Xgrid(j_left));
-        dist_right = fabs(Grid.Xgrid(j_right) - PS.getParticleX(ii));
+        dist_left = fabs(PS.ParticleX(ii) - Grid.Xgrid(j_left));
+        dist_right = fabs(Grid.Xgrid(j_right) - PS.ParticleX(ii));
         if (W == 0) // Zeroth-order weighting
         {
             if (dist_right > dist_left)
@@ -67,7 +67,7 @@ void ParticleWeight(size_t W, ParticleSpecies1d1v &PS, Grid1d1v &Grid){
 } 
 
 // Field solve
-
+void 
 
 // Weight the force back to the particles
 

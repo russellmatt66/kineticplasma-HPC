@@ -2,6 +2,7 @@
 #define GRID_H
 
 #include <vector>
+#include <cstddef>
 
 class Grid1d1v{
     public:
