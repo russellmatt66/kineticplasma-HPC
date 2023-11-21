@@ -2,6 +2,7 @@
 #define PARTICLES_H
 
 #include <vector>
+#include <cstddef>
 
 class ParticleSpecies1d1v{
     public:
@@ -30,10 +31,10 @@ class ParticleSpecies1d1v{
         std::vector<double>& getParticleEx() { return particle_Ex; }
 
     private:
+        size_t N_;
+        double Q_; 
         std::vector<double> particle_x;
         std::vector<double> particle_vx;
         std::vector<double> particle_Ex; // x-dir acceleration
-        double Q_; 
-        size_t N_;
 };
 #endif
