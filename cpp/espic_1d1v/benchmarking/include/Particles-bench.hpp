@@ -1,5 +1,5 @@
-#ifndef PARTICLES_DEBUG_H
-#define PARTICLES_DEBUG_H
+#ifndef PARTICLES_BENCH_H
+#define PARTICLES_BENCH_H
 
 #include <vector>
 
@@ -41,6 +41,6 @@ class ParticleSpecies1d1v{
         std::vector<double> particle_x;
         std::vector<double> particle_vx;
         std::vector<double> particle_Ex; // x-dir acceleration
-        std::vector<size_t> x_found; // location of particles
+        std::vector<size_t> x_found; // location of particles - indices
 };
 #endif

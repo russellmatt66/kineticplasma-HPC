@@ -1,12 +1,12 @@
-#ifndef ESPIC_HPP_DEBUG
-#define ESPIC_HPP_DEBUG
+#ifndef ESPIC_HPP_BENCH
+#define ESPIC_HPP_BENCH
 
 #include<cmath>
 #include<Eigen/Sparse>
 #include<Eigen/IterativeLinearSolvers>
 
-#include "Grid-debug.hpp"
-#include "Particles-debug.hpp"
+#include "Grid-bench.hpp"
+#include "Particles-bench.hpp"
 
 /*
 Binary search for ParticleWeight() below

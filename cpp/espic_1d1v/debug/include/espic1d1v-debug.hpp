@@ -186,7 +186,4 @@ size_t ParticlePush(ParticleSpecies1d1v& PS, Grid1d1v& Grid, const size_t N, con
     }
     return status;
 }
-
-// Collect data
-
 #endif
