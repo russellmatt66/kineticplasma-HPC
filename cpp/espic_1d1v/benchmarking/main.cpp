@@ -202,8 +202,8 @@ int main(int argc, char* argv[])
     auto stop_pic = high_resolution_clock::now();
     auto duration_pic = duration_cast<milliseconds>(stop_pic - start_pic);
 
-    cout << Nt << " timesteps of PIC algorithm processed. " << Nx << " grid points, and " << N << " particles" << endl;
-    cout << "Completed in " << duration_pic.count() << " milliseconds" << endl;
+    cout << Nt << " timesteps of PIC algorithm processed, with " << Nx << " grid points, and " << N << " particles" << endl;
+    cout << "Compute kernel completed in " << duration_pic.count() << " milliseconds" << endl;
     
     // Program completion
     cout << "Program halting successfully. Closing datafiles."  << endl;
