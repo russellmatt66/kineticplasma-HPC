@@ -1,6 +1,3 @@
-/* 
-Project Library
-*/
 #ifndef ESPIC_HPP
 #define ESPIC_HPP
 

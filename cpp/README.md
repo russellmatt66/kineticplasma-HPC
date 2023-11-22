@@ -9,7 +9,7 @@ cpp-petsc/
 - Parallel, PETSc version of the code.
 
 espic_1d1v/
-- Original, ROUGH draft of the code.
+- Original, mixed-Eigen/STL version of the code. Currently being refactored.
 
 # Current Tasks
 cpp-eigen/

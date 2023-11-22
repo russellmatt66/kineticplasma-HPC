@@ -1,13 +1,9 @@
 # Run Instructions:
 # Overview
-This code is largely obsolete, and should not be considered anything more than a proof-of-concept. 
-
-It possesses no build system, takes command-line input instead of a .inp file, uses .csv files to collect the data, and a mountain of Python spaghetti to process it. For a modern version, that is currently under development, look inside the `cpp-petsc/` directory. 
-
-This is the version of the high-performance 1D1V PIC code that uses Eigen to perform a sparse solve of the electrostatic field, as mentioned in the README of the root directory for this repository. To read a description of the PIC algorithm, look inside the file "SP23\_AA545\_ComputerProject1_2.pdf". 
+This version of the high-performance 1D1V C++ PIC code uses [`Eigen`](https://eigen.tuxfamily.org/index.php?title=Main_Page) to perform a sparse solve of the electrostatic field, as mentioned in the README of the root directory for this repository. As a consequence of this, O(Nx) work must be done every timestep in moving the data from the `std::vector` STL container into the `VectorXd` `Eigen` container. This somewhat defeats the reason to use a sparse solve in the first place, namely to achieve performance at fine grids (large Nx).  
 
 # Run
-The C++ library 'Eigen' is required to run this code. It was developed on v3.4.0 so this is preferred, but hopefully other versions work. 
+The C++ library `Eigen` is required to run this code. It was developed on v3.4.0 so this is preferred, but hopefully other versions work. 
 The library must be provided to the compiler at compile-time by running the command below,
 
 g++ -o main main.cpp -I path/to/eigen  
