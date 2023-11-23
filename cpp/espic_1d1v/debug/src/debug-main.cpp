@@ -33,6 +33,7 @@ int main(){
     double vprime = std::get<double>(inputParameters["vprime"]);
 
     // Initialize simulation - particle species, and grid
+    
 
     // Initial step
 
@@ -60,12 +61,15 @@ std::unordered_map<string, ParameterValue> parseInputFile(const string filename)
             string paramName = line.substr(0,delimiterPos);
             string paramValueStr = line.substr(delimiterPos + 1);
             if (paramName == "N" || paramName == "Nt" || paramName == "Nx" || paramName == "W"){
-                size_t paramValue = std::stoul(paramName);
+                size_t paramValue = std::stoul(paramValueStr);
                 parameters[paramName] = paramValue;
             } 
             else if (paramName == "vprime"){
-                double paramValue = std::stod(paramName);
+                double paramValue = std::stod(paramValueStr);
                 parameters[paramName] = paramValue;
+            }
+            else if (paramName == "particleICs"){
+                parameters[paramName] = paramValueStr;
             }
         }
     }

@@ -13,8 +13,8 @@ espic_1d1v/
 
 # Current Tasks
 espic_1d1v/
-- Implement uniform, static, positive background in `espic1d1v-debug.hpp`.
-- Implement initial conditions for species, and grid.
+- Implement integration of charge across grid.
+- Implement initial conditions for species.
 - Implement data collection.
 - Build with compiler optimizations, and benchmark with hardware performance counters.
 - **LONG-TERM** Completely eliminate the slow, heavily-templated `Eigen` via implementing sparse matrix solve by hand. 
@@ -23,5 +23,5 @@ cpp-eigen/
 - Refactor original code to be based on `Eigen` containers.
 
 cpp-petsc/
-- Learn how to solve Poisson equation on a structured grid with PETSc.
+- Learn how to solve Poisson's equation on a structured grid with PETSc.
 

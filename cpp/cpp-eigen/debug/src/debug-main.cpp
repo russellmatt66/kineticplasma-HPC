@@ -19,7 +19,6 @@ int main(){
     simlog.open("debug-log.txt");
     simlog << "Beginning simulation" << std::endl;
 
-    
     // Parse input file
     simlog << "Parsing input file" << std::endl;
     std::unordered_map<string, ParameterValue> inputParameters = parseInputFile("../debug/debug.inp");
@@ -31,7 +30,7 @@ int main(){
 
 
     // Initialize simulation - particle species, and grid
-
+    
     // Initial step
 
     // PIC Loop

@@ -31,12 +31,15 @@ size_t findParticle(const double particlePos, const std::vector<double> &x_grid)
 
 
 /*
-Weight the particles to the grid 
+Weight the particles to the grid.
 */
 void ParticleWeight(ParticleSpecies1d1v &PS, Grid1d1v &Grid, const size_t W, const size_t Nx, const size_t N, const double dx){
     size_t j_left, j_right;
     double dist_left, dist_right;
     const double Q_particle = PS.getParticleQ();
+
+    Grid.ZeroOutRho(); // Don't want to accumulate excess charge density
+
     for (size_t ii = 0; ii < N; ii++){
         j_left = findParticle(PS.ParticleX(ii), Grid.getXgrid());
         PS.XFound(ii) = j_left;
@@ -62,6 +65,9 @@ void ParticleWeight(ParticleSpecies1d1v &PS, Grid1d1v &Grid, const size_t W, con
     // Periodic Boundary Conditions
     Grid.RhoX(0) += Grid.RhoX(Nx - 1);
     Grid.RhoX(Nx - 1) = Grid.RhoX(0);
+
+    Grid.calculate_Qnet();
+    Grid.UniformPositiveBackground();
 } 
 
 // Build Laplacian Finite Difference Stencil
