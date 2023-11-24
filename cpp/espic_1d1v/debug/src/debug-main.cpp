@@ -27,7 +27,7 @@ int main(){
     
     // Parse input file
     simlog << "Parsing input file" << std::endl;
-    std::unordered_map<string, ParameterValue> inputParameters = parseInputFile("../debug/debug.inp");
+    std::unordered_map<string, ParameterValue> inputParameters = parseInputFile("debug.inp");
     size_t N = std::get<size_t>(inputParameters["N"]);
     size_t Nx = std::get<size_t>(inputParameters["Nx"]);
     size_t Nt = std::get<size_t>(inputParameters["Nt"]);
@@ -61,12 +61,13 @@ int main(){
     routineFlag = ParticleWeight(electrons,Grid,W,Nx,N,dx);
 
     // Build sparse matrix for electrostatic field solve
+    // A is (Nx-1)x(Nx-1) because of a persistent bug when it was (Nx)x(Nx)
     Eigen::SparseMatrix<double> A(Nx-1,Nx-1); // Periodic Boundary Conditions so don't need last line 
     A.reserve(Eigen::VectorXi::Constant(Nx-1,3)); // Poisson's equation so triangular
     routineFlag = BuildSparseLapl(A,dx);
 
     // Electrostatic field solve with a sparse matrix
-    Eigen::VectorXd rhoEig(Nx), phiEig(Nx); // Eigen needs its own containers for sparse solver
+    Eigen::VectorXd rhoEig(A.rows()), phiEig(A.rows()); // Eigen needs its own containers for sparse solver
     routineFlag = FieldSolveMatrix(A,Grid,rhoEig,phiEig,dx,Nx);
 
     // Weight grid electric field to particles, and then push 

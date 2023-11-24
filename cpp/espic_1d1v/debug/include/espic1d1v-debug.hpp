@@ -104,14 +104,14 @@ size_t BuildSparseLapl(Eigen::SparseMatrix<double> &A, const double dx){
 size_t FieldSolveMatrix(const Eigen::SparseMatrix<double>& A, Grid1d1v& Grid, Eigen::VectorXd rhoEig, Eigen::VectorXd phiEig, const double dx, const size_t Nx){
     size_t status = 0;
 
-    // Initialize VectorXd's
-    for (size_t ij = 0; ij < Nx; ij++){
+    // Initialize VectorXd's: A.rows() = Nx - 1
+    for (size_t ij = 0; ij < A.rows(); ij++){
         rhoEig[ij] = Grid.RhoX(ij); 
         phiEig[ij] = 0.0; // just initialize phi to 0 for simplicity
     }  
     
     // Boundary conditions - see writeup
-    rhoEig[Nx-1] = 0.0;
+    rhoEig[A.rows()-1] = 0.0;
 
     // Solve A*phi = -rho for phi
     Eigen::SparseLU<Eigen::SparseMatrix<double>> solver;
@@ -121,8 +121,8 @@ size_t FieldSolveMatrix(const Eigen::SparseMatrix<double>& A, Grid1d1v& Grid, Ei
     double residual = (A * phiEig - rhoEig).norm();
     // cout << "LU residual is " << residual << endl;
 
-    // Copy out
-    for (size_t ij = 0; ij < Nx; ij++){
+    // Copy out - phiEig size 
+    for (size_t ij = 0; ij < A.rows(); ij++){
         Grid.PhiX(ij) = phiEig[ij];  
     }
 

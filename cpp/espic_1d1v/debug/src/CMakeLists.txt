@@ -7,6 +7,6 @@ find_package(Eigen3 REQUIRED)
 
 include_directories(${EIGEN3_INCLUDE_DIR})
 
-add_executable(espic1d1v-debug main.cpp)
+add_executable(espic1d1v-debug debug-main.cpp)
 target_link_libraries(espic1d1v-debug PRIVATE Eigen3::Eigen)
-target_compile_options(imhd-release PRIVATE -O3 -Wall)
+target_compile_options(espic1d1v-debug PRIVATE -O3 -Wall)

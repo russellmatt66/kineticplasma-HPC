@@ -11,29 +11,7 @@
 using std::string;
 
 // Initial Conditions
-size_t InitialConditions(ParticleSpecies1d1v& PS, Grid1d1v& Grid, const double vprime, const string particleModeICs){
-    size_t status = 0;
-    double dx = Grid.getDX();
-    status = ParticleICs(PS, Grid, vprime, dx, particleModeICs);
-    return status;
-}
-
 // Species
-// Grid is needed to get relevant attributes, e.g., L
-size_t ParticleICs(ParticleSpecies1d1v& PS, Grid1d1v& Grid, const double vprime, const double dx, const string particleModeICs){
-    size_t status = 0;
-    size_t Nx = Grid.getNx();
-
-    if (particleModeICs == "random"){
-        status = ParticleICsRandom(PS, vprime);
-    }
-    else if (particleModeICs == "uniform"){
-        status = ParticleICsUniform(PS, Grid, vprime);
-    }
-
-    return status;
-}
-
 // Initialize a Maxwellian Population with a specific FWHM
 size_t ParticleICsRandom(ParticleSpecies1d1v& PS, const double vprime){
     size_t status = 0;
@@ -60,6 +38,31 @@ size_t ParticleICsUniform(ParticleSpecies1d1v& PS, Grid1d1v& Grid, const double 
 
     return status;
 }
+
+// Wrapper for the specific particle configurations
+// Grid is needed to get relevant attributes, e.g., L
+size_t ParticleICs(ParticleSpecies1d1v& PS, Grid1d1v& Grid, const double vprime, const double dx, const string particleModeICs){
+    size_t status = 0;
+    // size_t Nx = Grid.getNx();
+
+    if (particleModeICs == "random"){
+        status = ParticleICsRandom(PS, vprime);
+    }
+    else if (particleModeICs == "uniform"){
+        status = ParticleICsUniform(PS, Grid, vprime);
+    }
+
+    return status;
+}
+
+// Put it all togther
+size_t InitialConditions(ParticleSpecies1d1v& PS, Grid1d1v& Grid, const double vprime, const string particleModeICs){
+    size_t status = 0;
+    double dx = Grid.getDX();
+    status = ParticleICs(PS, Grid, vprime, dx, particleModeICs);
+    return status;
+}
+
 
 // Grid
 size_t GridICs(Grid1d1v& Grid, const string gridModeICs){
