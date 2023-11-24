@@ -7,4 +7,4 @@ On my machine, this is accomplished via,
 
 Generally, it will be of the form,
 
-    cmake ../src -DCMAKE_MODULE_PATH=$HOME/software/eigen-3.4.0/cmake
+    cmake ../src -DCMAKE_MODULE_PATH=$HOME/path/to/eigen-3.4.0/cmake
