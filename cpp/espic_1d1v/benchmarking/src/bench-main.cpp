@@ -28,7 +28,7 @@ int main(){
     
     // Parse input file
     simlog << "Parsing input file" << std::endl;
-    std::unordered_map<string, ParameterValue> inputParameters = parseInputFile("debug.inp");
+    std::unordered_map<string, ParameterValue> inputParameters = parseInputFile("bench.inp");
     size_t N = std::get<size_t>(inputParameters["N"]);
     size_t Nx = std::get<size_t>(inputParameters["Nx"]);
     size_t Nt = std::get<size_t>(inputParameters["Nt"]);
@@ -92,7 +92,7 @@ int main(){
 
     simlog << "Closing log" << std::endl;
     simlog.close();
-    return 0;
+    return routineFlag;
 }
 
 std::unordered_map<string, ParameterValue> parseInputFile(const string filename){
