@@ -40,23 +40,29 @@ class Grid1d1v{
         std::vector<double>& getEX() { return E_x; }
 
         // Zero out the charge density
+        // Needed for ParticleWeighting() to not accumulate excess charge
         void ZeroOutRho() {
             for (size_t ij = 0; ij < Nx_; ij++){
                 rho_x[ij] = 0.0;
             }
         }
 
-        // Calculate net charge on grid - Need to implement
+        // Calculate net charge on grid
+        // Trapezoidal integratation of rho_x across x_grid
         double calculate_Qnet() { 
-            // Integrate rho_x across x_grid to obtain net charge
+            double dx = getDX(), sum = 0.0;
+            for (size_t ij = 0; ij < Nx_-1; ij++){
+                sum += 0.5 * (rho_x[ij] + rho_x[ij+1]);
+            }
+            Qnet_ = dx * sum;
             return Qnet_; 
         }
 
         // Neutralize grid with uniform, positive background
         void UniformPositiveBackground() {
-            double L = getL();
+            double L = getL(), totalQ = fabs(Qnet_);
             for (size_t ij = 0; ij < Nx_; ij++){
-                rho_x[ij] += fabs(Qnet_) / L; 
+                rho_x[ij] += totalQ / L; 
             }
         }
 
