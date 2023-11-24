@@ -33,12 +33,10 @@ size_t findParticle(const double particlePos, const std::vector<double> &x_grid)
 /*
 Weight the particles to the grid.
 */
-void ParticleWeight(ParticleSpecies1d1v &PS, Grid1d1v &Grid, const size_t W, const size_t Nx, const size_t N, const double dx){
-    size_t j_left, j_right;
+size_t ParticleWeight(ParticleSpecies1d1v &PS, Grid1d1v &Grid, const size_t W, const size_t Nx, const size_t N, const double dx){
+    size_t j_left, j_right, status = 0;
     double dist_left, dist_right;
     const double Q_particle = PS.getParticleQ();
-
-    Grid.ZeroOutRho(); // Don't want to accumulate excess charge density
 
     for (size_t ii = 0; ii < N; ii++){
         j_left = findParticle(PS.ParticleX(ii), Grid.getXgrid());
@@ -68,6 +66,7 @@ void ParticleWeight(ParticleSpecies1d1v &PS, Grid1d1v &Grid, const size_t W, con
 
     Grid.calculate_Qnet();
     Grid.UniformPositiveBackground();
+    return status;
 } 
 
 // Build Laplacian Finite Difference Stencil
@@ -137,7 +136,6 @@ size_t FieldSolveMatrix(const Eigen::SparseMatrix<double>& A, Grid1d1v& Grid, Ei
         }
         else if (ij == (Nx - 1)){
             Grid.EX(ij) = Grid.EX(0); // E_{Nx-1} = E_{0} is second PBC
-            // E_grid(ij) = (phi(phi.num_rows() - 2) - phi(0)) / (2.0 * dx);
         }
         else {
             Grid.EX(ij) = -(Grid.PhiX(ij + 1) - Grid.PhiX(ij - 1)) / (2.0 * dx); 

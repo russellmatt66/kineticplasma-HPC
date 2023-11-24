@@ -22,12 +22,13 @@ size_t InitialConditions(ParticleSpecies1d1v& PS, Grid1d1v& Grid, const double v
 // Grid is needed to get relevant attributes, e.g., L
 size_t ParticleICs(ParticleSpecies1d1v& PS, Grid1d1v& Grid, const double vprime, const double dx, const string particleModeICs){
     size_t status = 0;
+    size_t Nx = Grid.getNx();
 
     if (particleModeICs == "random"){
         status = ParticleICsRandom(PS, vprime);
     }
     else if (particleModeICs == "uniform"){
-        status = ParticleICsUniform(PS, Grid, vprime, dx);
+        status = ParticleICsUniform(PS, Grid, vprime);
     }
 
     return status;

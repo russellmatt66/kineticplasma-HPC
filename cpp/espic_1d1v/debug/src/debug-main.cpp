@@ -12,6 +12,7 @@
 #include "../include/Particles-debug.hpp"
 #include "../include/Grid-debug.hpp"
 #include "../include/espic1d1v-debug.hpp"
+#include "../include/SimUtils-debug.hpp"
 
 using std::string;
 using ParameterValue = std::variant<size_t, double, string>;
@@ -19,6 +20,7 @@ using ParameterValue = std::variant<size_t, double, string>;
 std::unordered_map<string, ParameterValue> parseInputFile(const string filename);
 
 int main(){
+    size_t routineFlag;
     std::ofstream simlog;
     simlog.open("debug.log");
     simlog << "Beginning simulation" << std::endl;
@@ -32,12 +34,59 @@ int main(){
     size_t W = std::get<size_t>(inputParameters["W"]);
     double vprime = std::get<double>(inputParameters["vprime"]);
 
-    // Initialize simulation - particle species, and grid
-    
+    // Initialize simulation: particle species, and uniform grid
+    simlog << "Constructing particles" << std::endl;
+    ParticleSpecies1d1v electrons(N,-1.0);
+    simlog << "Constructing grid" << std::endl;
+    Grid1d1v Grid(Nx, -M_PI, M_PI);  
+    double dx = Grid.getDX();
+    double L = Grid.getL();
 
-    // Initial step
+
+    string particleICs = std::get<string>(inputParameters["particleICs"]);
+    simlog << "Writing Initial Conditions" << std::endl;
+    routineFlag = InitialConditions(electrons,Grid,vprime,particleICs);
+
+    // Initialize time
+    simlog << "Initializing time variables" << std::endl;
+
+    double omega_p = sqrt(N/L);
+    double t = 0.0, tau_p = (2.0 * M_PI) / omega_p;
+    double dt = std::get<double>(inputParameters["dtcoeff"]) * tau_p;
+    
+    /*
+    Initial PIC step
+    */ 
+    simlog << "Performing initial PIC step" << std::endl;  
+    routineFlag = ParticleWeight(electrons,Grid,W,Nx,N,dx);
+
+    // Build sparse matrix for electrostatic field solve
+    Eigen::SparseMatrix<double> A(Nx-1,Nx-1); // Periodic Boundary Conditions so don't need last line 
+    A.reserve(Eigen::VectorXi::Constant(Nx-1,3)); // Poisson's equation so triangular
+    routineFlag = BuildSparseLapl(A,dx);
+
+    // Electrostatic field solve with a sparse matrix
+    Eigen::VectorXd rhoEig(Nx), phiEig(Nx); // Eigen needs its own containers for sparse solver
+    routineFlag = FieldSolveMatrix(A,Grid,rhoEig,phiEig,dx,Nx);
+
+    // Weight grid electric field to particles, and then push 
+    routineFlag = ForceWeight(electrons,Grid,N,W,dx); 
+    for (size_t ii = 0; ii < N; ii++){ // half-step backwards to start Leapfrog scheme
+        electrons.ParticleVx(ii) = electrons.ParticleVx(ii) - 0.5*dt*electrons.ParticleEx(ii);
+    }
+    routineFlag = ParticlePush(electrons,Grid,N,Nx,dt,dx);
 
     // PIC Loop
+    for (size_t it = 1; it < Nt; it++){
+        simlog << "Starting timestep " << it << std::endl;
+        t += dt;
+        Grid.ZeroOutRho(); // Don't want to accumulate excess charge density between timesteps
+        routineFlag = ParticleWeight(electrons,Grid,W,Nx,N,dx);
+        routineFlag = FieldSolveMatrix(A,Grid,rhoEig,phiEig,dx,Nx);
+        routineFlag = ForceWeight(electrons,Grid,N,W,dx); 
+        routineFlag = ParticlePush(electrons,Grid,N,Nx,dt,dx);
+        simlog << "Timestep " << it << " complete" << std::endl;
+    }
 
     simlog << "Closing log" << std::endl;
     simlog.close();
@@ -64,7 +113,7 @@ std::unordered_map<string, ParameterValue> parseInputFile(const string filename)
                 size_t paramValue = std::stoul(paramValueStr);
                 parameters[paramName] = paramValue;
             } 
-            else if (paramName == "vprime"){
+            else if (paramName == "vprime" || paramName == "dtcoeff"){
                 double paramValue = std::stod(paramValueStr);
                 parameters[paramName] = paramValue;
             }
