@@ -31,12 +31,13 @@ size_t findParticle(const double particlePos, const std::vector<double> &x_grid)
 
 
 /*
-Weight the particles to the grid 
+Weight the particles to the grid.
 */
-void ParticleWeight(ParticleSpecies1d1v &PS, Grid1d1v &Grid, const size_t W, const size_t Nx, const size_t N, const double dx){
-    size_t j_left, j_right;
+size_t ParticleWeight(ParticleSpecies1d1v &PS, Grid1d1v &Grid, const size_t W, const size_t Nx, const size_t N, const double dx){
+    size_t j_left, j_right, status = 0;
     double dist_left, dist_right;
     const double Q_particle = PS.getParticleQ();
+
     for (size_t ii = 0; ii < N; ii++){
         j_left = findParticle(PS.ParticleX(ii), Grid.getXgrid());
         PS.XFound(ii) = j_left;
@@ -62,6 +63,10 @@ void ParticleWeight(ParticleSpecies1d1v &PS, Grid1d1v &Grid, const size_t W, con
     // Periodic Boundary Conditions
     Grid.RhoX(0) += Grid.RhoX(Nx - 1);
     Grid.RhoX(Nx - 1) = Grid.RhoX(0);
+
+    Grid.calculate_Qnet();
+    Grid.UniformPositiveBackground();
+    return status;
 } 
 
 // Build Laplacian Finite Difference Stencil
@@ -99,14 +104,14 @@ size_t BuildSparseLapl(Eigen::SparseMatrix<double> &A, const double dx){
 size_t FieldSolveMatrix(const Eigen::SparseMatrix<double>& A, Grid1d1v& Grid, Eigen::VectorXd rhoEig, Eigen::VectorXd phiEig, const double dx, const size_t Nx){
     size_t status = 0;
 
-    // Initialize VectorXd's
-    for (size_t ij = 0; ij < Nx; ij++){
+    // Initialize VectorXd's: A.rows() = Nx - 1
+    for (size_t ij = 0; ij < A.rows(); ij++){
         rhoEig[ij] = Grid.RhoX(ij); 
         phiEig[ij] = 0.0; // just initialize phi to 0 for simplicity
     }  
     
     // Boundary conditions - see writeup
-    rhoEig[Nx-1] = 0.0;
+    rhoEig[A.rows()-1] = 0.0;
 
     // Solve A*phi = -rho for phi
     Eigen::SparseLU<Eigen::SparseMatrix<double>> solver;
@@ -116,8 +121,8 @@ size_t FieldSolveMatrix(const Eigen::SparseMatrix<double>& A, Grid1d1v& Grid, Ei
     double residual = (A * phiEig - rhoEig).norm();
     // cout << "LU residual is " << residual << endl;
 
-    // Copy out
-    for (size_t ij = 0; ij < Nx; ij++){
+    // Copy out - phiEig size 
+    for (size_t ij = 0; ij < A.rows(); ij++){
         Grid.PhiX(ij) = phiEig[ij];  
     }
 
@@ -131,7 +136,6 @@ size_t FieldSolveMatrix(const Eigen::SparseMatrix<double>& A, Grid1d1v& Grid, Ei
         }
         else if (ij == (Nx - 1)){
             Grid.EX(ij) = Grid.EX(0); // E_{Nx-1} = E_{0} is second PBC
-            // E_grid(ij) = (phi(phi.num_rows() - 2) - phi(0)) / (2.0 * dx);
         }
         else {
             Grid.EX(ij) = -(Grid.PhiX(ij + 1) - Grid.PhiX(ij - 1)) / (2.0 * dx); 
@@ -186,7 +190,4 @@ size_t ParticlePush(ParticleSpecies1d1v& PS, Grid1d1v& Grid, const size_t N, con
     }
     return status;
 }
-
-// Collect data
-
 #endif

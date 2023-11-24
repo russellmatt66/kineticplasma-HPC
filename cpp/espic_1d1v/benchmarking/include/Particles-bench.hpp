@@ -41,6 +41,6 @@ class ParticleSpecies1d1v{
         std::vector<double> particle_x;
         std::vector<double> particle_vx;
         std::vector<double> particle_Ex; // x-dir acceleration
-        std::vector<size_t> x_found; // location of particles - indices
+        std::vector<size_t> x_found; // location of particles
 };
 #endif
