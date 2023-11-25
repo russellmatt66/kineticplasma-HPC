@@ -1,5 +1,9 @@
 # Summary
-This folder builds an executable which can be used to benchmark the kernel of the PIC code. Additionally, a bash script 'perf_data.sh', and a python script 'CollectPerfData.py', are used to benchmark the code by counting hardware floating-point events
+This folder builds an executable which can be used to benchmark the kernel of the PIC code. Additionally, a bash script 'perf_data.sh', and a python script 'CollectPerfData.py', are used to benchmark the code by counting hardware floating-point events.
+
+# Dell Inspiron 7591 2n1
+N_max = 2^28 = 268435456
+Nx_max = 2^13 = 8192
 
 # Build
 `Eigen` must be installed, and CMake must be pointed to the folder where the `FindEigen3.cmake` file is. 
