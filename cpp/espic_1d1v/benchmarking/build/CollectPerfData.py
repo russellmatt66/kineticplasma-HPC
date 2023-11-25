@@ -3,7 +3,7 @@ import os
 import sys
 import math
 
-def execute_bash_script(bash_script_path: str, executable_path: str, num_runs: int, output_location: str) -> None:
+def execute_bash_script(bash_script_path: str, executable_path: str, num_runs: str, output_location: str) -> None:
     try:
         subprocess.run(['bash', bash_script_path, executable_path, num_runs, output_location], check=True)
     except subprocess.CalledProcessError as e:
@@ -47,10 +47,10 @@ def main():
     Nx_max = int(sys.argv[8])
 
     # Should look like [(N_min, Nx_min), 2*(N_min, Nx_min), 4*(N_min, Nx_min), ... , (N_max, Nx_max)]
-    parameter_list = [(2**i, 2**j) for i in range(math.log2(N_min), math.log2(N_max)+1)
-                      for j in range(math.log2(Nx_min), math.log2(Nx_max)+1)]
+    parameter_list = [(2**i, 2**j) for i in range(int(math.log2(N_min)), int(math.log2(N_max))+1)
+                      for j in range(int(math.log2(Nx_min)), int(math.log2(Nx_max))+1)]
 
-    num_runs = 25
+    num_runs = '25'
 
     for (N,Nx) in parameter_list:
         Nt_num = modify_inp_file(input_file_path, (N,Nx))
