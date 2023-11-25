@@ -7,6 +7,12 @@ cpp/espic_1d1v/pythoncode/__pycache__
 cpp/espic_1d1v/debug/build/*
 !cpp/espic_1d1v/debug/build/debug.inp
 !cpp/espic_1d1v/debug/build/README.md
+!cpp/espic_1d1v/debug/build/espic_1d1v-debug
 cpp/espic_1d1v/benchmarking/build/*
 !cpp/espic_1d1v/benchmarking/build/bench.inp
+!cpp/espic_1d1v/benchmarking/build/README.md
+!cpp/espic_1d1v/benchmarking/build/espic_1d1v-bench
+!cpp/espic_1d1v/benchmarking/build/CollectPerfData.py
+!cpp/espic_1d1v/benchmarking/build/perf_data.sh
+
 rust/target/*
