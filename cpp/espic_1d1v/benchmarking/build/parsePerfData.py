@@ -14,6 +14,7 @@ with open('../data/csv/PerfOutput_Kernel.csv', 'w', newline = '') as csvfile:
     headerRow = ["N", "Nx", "FP_ARITH", "WALLTIME_MEAN", "WALLTIME_STDDEV"]
     csv_writer.writerow(headerRow)
 
+# Strictly-speaking, this only holds for espic_1d1v
 Npattern = r"_N(\d+)_"
 Nxpattern = r"_Nx(\d+)_"
 
