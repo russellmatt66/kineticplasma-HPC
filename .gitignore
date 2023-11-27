@@ -14,5 +14,6 @@ cpp/espic_1d1v/benchmarking/build/*
 !cpp/espic_1d1v/benchmarking/build/espic_1d1v-bench
 !cpp/espic_1d1v/benchmarking/build/CollectPerfData.py
 !cpp/espic_1d1v/benchmarking/build/perf_data.sh
+!cpp/espic_1d1v/benchmarking/build/parsePerfData.py
 
 rust/target/*
