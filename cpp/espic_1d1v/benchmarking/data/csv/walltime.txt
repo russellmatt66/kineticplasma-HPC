@@ -1,0 +1,1 @@
+Walltime for executable parameter scan = 260636.50111524182 seconds
