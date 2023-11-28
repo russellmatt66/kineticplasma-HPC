@@ -2,6 +2,7 @@ import subprocess
 import os
 import sys
 import math
+from pathlib import Path
 
 def execute_bash_script(bash_script_path: str, executable_path: str, num_runs: str, output_location: str) -> None:
     try:
@@ -52,9 +53,14 @@ def main():
 
     num_runs = '25'
 
+    for twotuple in parameter_list:
+        N = twotuple[0]
+        Path(output_folder + "PerfStat_N" + str(N)).mkdir(parents=True, exist_ok=True)
+
     for (N,Nx) in parameter_list:
         Nt_num = modify_inp_file(input_file_path, (N,Nx))
-        output_location = output_folder + "PerfStat_N" + str(N) + "_Nx" + str(Nx) + "_Nt" + str(Nt_num) + ".txt" 
+        output_location = output_folder + "PerfStatN" + str(N) + "/" + "PerfStat_N" + str(N) + "Nx" + str(Nx) + "Nt" + str(Nt_num) + ".txt" 
+        print("Collecting performance data for N = " + str(N) + "Nx = " + str(Nx))
         execute_bash_script(bash_script_path, executable_path, num_runs, output_location)
 
 if __name__ == "__main__":

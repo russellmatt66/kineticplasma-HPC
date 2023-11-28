@@ -1,0 +1,326 @@
+
+Run 1:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.005751707 seconds time elapsed
+
+       0.000000000 seconds user
+       0.005787000 seconds sys
+
+
+
+Run 2:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.005191669 seconds time elapsed
+
+       0.002602000 seconds user
+       0.002602000 seconds sys
+
+
+
+Run 3:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.005113003 seconds time elapsed
+
+       0.002571000 seconds user
+       0.002571000 seconds sys
+
+
+
+Run 4:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004723855 seconds time elapsed
+
+       0.004787000 seconds user
+       0.000000000 seconds sys
+
+
+
+Run 5:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004863740 seconds time elapsed
+
+       0.004895000 seconds user
+       0.000000000 seconds sys
+
+
+
+Run 6:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004710944 seconds time elapsed
+
+       0.002361000 seconds user
+       0.002361000 seconds sys
+
+
+
+Run 7:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004709681 seconds time elapsed
+
+       0.004732000 seconds user
+       0.000000000 seconds sys
+
+
+
+Run 8:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004762493 seconds time elapsed
+
+       0.002393000 seconds user
+       0.002393000 seconds sys
+
+
+
+Run 9:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004683085 seconds time elapsed
+
+       0.000000000 seconds user
+       0.004697000 seconds sys
+
+
+
+Run 10:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004843290 seconds time elapsed
+
+       0.004872000 seconds user
+       0.000000000 seconds sys
+
+
+
+Run 11:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004796232 seconds time elapsed
+
+       0.004775000 seconds user
+       0.000000000 seconds sys
+
+
+
+Run 12:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004712309 seconds time elapsed
+
+       0.004742000 seconds user
+       0.000000000 seconds sys
+
+
+
+Run 13:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004721683 seconds time elapsed
+
+       0.002347000 seconds user
+       0.002347000 seconds sys
+
+
+
+Run 14:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004672782 seconds time elapsed
+
+       0.004695000 seconds user
+       0.000000000 seconds sys
+
+
+
+Run 15:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004800384 seconds time elapsed
+
+       0.002412000 seconds user
+       0.002412000 seconds sys
+
+
+
+Run 16:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004674570 seconds time elapsed
+
+       0.004741000 seconds user
+       0.000000000 seconds sys
+
+
+
+Run 17:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004689401 seconds time elapsed
+
+       0.002344000 seconds user
+       0.002344000 seconds sys
+
+
+
+Run 18:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004684015 seconds time elapsed
+
+       0.004712000 seconds user
+       0.000000000 seconds sys
+
+
+
+Run 19:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004881709 seconds time elapsed
+
+       0.002447000 seconds user
+       0.002447000 seconds sys
+
+
+
+Run 20:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004841708 seconds time elapsed
+
+       0.004875000 seconds user
+       0.000000000 seconds sys
+
+
+
+Run 21:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004717158 seconds time elapsed
+
+       0.002374000 seconds user
+       0.002374000 seconds sys
+
+
+
+Run 22:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004864203 seconds time elapsed
+
+       0.004902000 seconds user
+       0.000000000 seconds sys
+
+
+
+Run 23:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004754489 seconds time elapsed
+
+       0.004783000 seconds user
+       0.000000000 seconds sys
+
+
+
+Run 24:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.005140698 seconds time elapsed
+
+       0.005116000 seconds user
+       0.000000000 seconds sys
+
+
+
+Run 25:
+
+ Performance counter stats for './espic1d1v-bench':
+
+           555,531      r5301c7                                                               
+
+       0.004649810 seconds time elapsed
+
+       0.004715000 seconds user
+       0.000000000 seconds sys
+
+
+
