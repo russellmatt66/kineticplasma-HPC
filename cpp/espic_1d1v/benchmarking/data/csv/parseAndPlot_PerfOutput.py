@@ -15,12 +15,12 @@ fig = plt.figure()
 ax = fig.add_subplot(121, projection='3d')
 
 # Plot landscape of the Mean Walltime
-ax.plot_trisurf(np.log2(perfoutput.N), np.log10(perfoutput.Nx), perfoutput.WALLTIME_MEAN, cmap='viridis')
+ax.plot_trisurf(np.log2(perfoutput.N), np.log10(perfoutput.Nx), np.log10(perfoutput.WALLTIME_MEAN), cmap='viridis')
 
 # Set labels
-ax.set_xlabel('log2(N)')
-ax.set_ylabel('log10(Nx)')
-ax.set_zlabel('Mean Walltime')
+ax.set_xlabel('$log_{2}$(N)')
+ax.set_ylabel('$log_{10}$(Nx)')
+ax.set_zlabel('$log_{10}$($\\bar{\\tau}_{wall}$)')
 ax.set_title('Average Walltime of 1D1V ES-PIC Simulation Kernel')
 
 
@@ -29,8 +29,8 @@ ax = fig.add_subplot(122, projection='3d')
 ax.plot_trisurf(np.log2(perfoutput.N), np.log10(perfoutput.Nx), Performance / 1e9, cmap='viridis')
 
 # Set labels
-ax.set_xlabel('log2(N)')
-ax.set_ylabel('log10(Nx)')
+ax.set_xlabel('$log_{2}$(N)')
+ax.set_ylabel('$log_{10}$(Nx)')
 ax.set_zlabel('Performance (Gflops)')
 ax.set_title('Performance of 1D1V ES-PIC Simulation Kernel')
 
