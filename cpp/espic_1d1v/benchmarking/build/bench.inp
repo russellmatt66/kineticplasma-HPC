@@ -4,4 +4,4 @@ Nt=100
 dtcoeff=0.05
 W=1
 vprime=0.1
-particleICs=random
+particleICs=uniform
