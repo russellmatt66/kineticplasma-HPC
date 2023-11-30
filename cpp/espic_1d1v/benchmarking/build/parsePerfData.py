@@ -13,7 +13,7 @@ folder_path = Path("../data/")
 # Write header to .csv
 with open('../data/csv/PerfOutput_Kernel.csv', 'w', newline = '') as csvfile:
     csv_writer = csv.writer(csvfile)
-    headerRow = ["N", "Nx", "FP_ARITH", "WALLTIME_MEAN", "WALLTIME_STDDEV"]
+    headerRow = ["N", "Nx", "FP_ARITH", "WALLTIME_MEAN", "WALLTIME_STDDEV", "INVWALLTIME_SUM"]
     csv_writer.writerow(headerRow)
 
 # Strictly-speaking, this only holds for espic_1d1v
@@ -36,12 +36,6 @@ for folder in folder_path.iterdir():
             if Nxmatch:
                 Nx = Nxmatch.group(1)
                 csvArray.append(Nx)
-            # Nidx = str(file).find("N")
-            # Nxidx = str(file).find("Nx")
-            # N = str(file)[Nidx]
-            # Nx = str(file)[Nxidx]
-            # csvArray.append(N) 
-            # csvArray.append(Nx)
             with open(file, 'r') as fp:
                 rtArray = []
                 foundArith = False
@@ -65,9 +59,11 @@ for folder in folder_path.iterdir():
                         continue
             meanWalltime = np.mean(np.array(rtArray))
             stddevWalltime = np.std(np.array(rtArray))
+            invWalltime_sum = np.sum(1.0 / np.array(rtArray))
             csvArray.append(numArith)
             csvArray.append(meanWalltime)
             csvArray.append(stddevWalltime)
+            csvArray.append(invWalltime_sum)
             with open('../data/csv/PerfOutput_Kernel.csv', 'a', newline = '') as csvfile:
                 csv_writer = csv.writer(csvfile)
                 csv_writer.writerow(csvArray)
