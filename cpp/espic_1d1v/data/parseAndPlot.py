@@ -33,6 +33,7 @@ Parse DataFrames
 
 # Create movie of velocity histogram
 # Need to make histogram into distribution function
+# Make f(v) out of histogram by normalizing counts
 fig, ax = plt.subplots()
 
 v_min = particle_df_list[0]['v_i'].min()
