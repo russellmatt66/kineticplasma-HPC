@@ -2,6 +2,7 @@
 #define PARTICLES_H
 
 #include <vector>
+#include <cstddef>
 
 class ParticleSpecies1d1v{
     public:
