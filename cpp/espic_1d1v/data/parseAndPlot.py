@@ -30,8 +30,20 @@ print(particle_df)
 """
 Parse DataFrames
 """
+# Integrate electric field and particle kinetic energy
 
-# Create movie of velocity histogram
+# 
+
+"""
+Plot output
+"""
+# Create movie of energy history
+
+# Create movie of grid field and potential
+
+# Create movie of phase-space
+
+# Create movie of distribution function
 # Need to make histogram into distribution function
 # Make f(v) out of histogram by normalizing counts
 fig, ax = plt.subplots()
@@ -50,9 +62,5 @@ def update(frame):
     ax.set_title(f'Frame {frame}, N = {N}')
 
 animation = FuncAnimation(fig, update, frames=len(particle_df_list), interval=200, repeat=False)
-
-"""
-Plot output
-"""
 
 plt.show()
