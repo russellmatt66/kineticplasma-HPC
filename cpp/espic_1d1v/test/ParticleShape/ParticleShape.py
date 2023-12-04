@@ -13,7 +13,7 @@ x_grid = np.linspace(-np.pi,np.pi,num=250)
 # print(x_grid)
 
 # a_0 = 1.01 * (x_grid[x_grid.size - 1] - x_grid[0]) / x_grid.size
-a_0 = 1.0
+a_0 = 0.1
 print(a_0)
 
 shapeFig, shapeAx = plt.subplots(nrows=2, ncols=2)
@@ -48,7 +48,7 @@ shapeAx[0,0].set_xlabel('x')
 shapeAx[0,0].set_ylabel('A')
 
 # shapeAx[1].plot(x_grid,tri_wave)
-shapeAx[0,1].plot(x_grid,S_1 / max(S_1))
+shapeAx[0,1].plot(x_grid,S_1)
 shapeAx[0,1].set_title('$S_{1}$')
 shapeAx[0,1].set_xlim([x_grid[0], x_grid[x_grid.size - 1]])
 shapeAx[0,1].set_xlabel('x')

@@ -62,15 +62,15 @@ with open('maxMin.txt', 'w', newline = '') as fp:
 
 # Plot data "landscapes"
 fig = plt.figure()
-ax = fig.add_subplot(121, projection='3d')
+ax = fig.add_subplot(211, projection='3d')
 
 # Plot landscape of the Mean Walltime
-ax.plot_trisurf(np.log2(perfoutput.N), np.log10(perfoutput.Nx), np.log10(perfoutput.WALLTIME_MEAN), cmap='viridis')
+ax.plot_trisurf(np.log2(perfoutput.N), np.log10(perfoutput.Nx), perfoutput.WALLTIME_MEAN, cmap='viridis')
 
 # Set labels
 ax.set_xlabel('$log_{2}$(N)')
 ax.set_ylabel('$log_{10}$(Nx)')
-ax.set_zlabel('$log_{10}$($\\bar{\\tau}_{wall}$)')
+ax.set_zlabel('$\\bar{\\tau}_{wall}$ (s)')
 ax.set_title('Average Walltime of 1D1V ES-PIC Simulation Kernel')
 
 
@@ -87,7 +87,7 @@ ax.set_title('Average Walltime of 1D1V ES-PIC Simulation Kernel')
 # fig.suptitle("Benchmarking a Serial 1D1V ES-PIC Simulation Kernel on a Dell Inspiron 7591 2n1")
 
 # Plot landscape of the Kernel Mean Performance
-ax = fig.add_subplot(122, projection='3d')
+ax = fig.add_subplot(212, projection='3d')
 ax.plot_trisurf(np.log2(perfoutput.N), np.log10(perfoutput.Nx), AvgPerformance / 1e9, cmap='viridis')
 
 # Set labels
