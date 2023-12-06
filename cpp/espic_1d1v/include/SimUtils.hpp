@@ -15,13 +15,6 @@ using std::string;
 
 // Initial Conditions
 // Species
-// Initialize a Maxwellian Population with a specific FWHM
-size_t ParticleICsRandom(ParticleSpecies1d1v& PS, const double vprime){
-    size_t status = 0;
-    /* TODO */
-    return status;
-}
-
 // Initialize a uniformly spaced population with a sinusoidal velocity perturbation
 size_t ParticleICsUniform(ParticleSpecies1d1v& PS, Grid1d1v& Grid, const double vprime){
     size_t status = 0;
@@ -42,6 +35,44 @@ size_t ParticleICsUniform(ParticleSpecies1d1v& PS, Grid1d1v& Grid, const double 
     return status;
 }
 
+// ICs for two-stream instability
+// Only one electron population b/c then there's no need to refactor further
+size_t ParticleICsTwostream(ParticleSpecies1d1v& PS, Grid1d1v& Grid, const double vprime){
+    size_t status = 0;
+
+    // Get all the necessary attributes
+    size_t N = PS.getParticleNum(), Nx = Grid.getNx();
+    double L = Grid.getL();
+    double k = 2.0 * M_PI / L, x_max = Grid.Xgrid(Nx-1), x_min = Grid.Xgrid(0); 
+    double dx_p = (x_max - x_min) / N;
+    double m = (1.0 / (N-1)) * (x_max - x_min - dx_p), b = x_min + dx_p / 2.0;
+
+    // Initialize counterstreaming electrons
+    // Uniformly-spaced populations with a sinusoidal perturbation that is 90 deg out of phase b/w the two
+    // Streaming right: i \in [0, N/2 - 1]
+    // Streaming left: i \in [N/2, N - 1]
+    size_t l_index; 
+    for (size_t ii = 0; ii < N / 2; ii++){
+        // Streaming right
+        PS.ParticleVx(ii) = vprime;
+        PS.ParticleX(ii) =  m * ii + b;
+        PS.ParticleX(ii) += 0.01*sin(k * PS.ParticleX(ii));
+        // Streaming left
+        l_index = ii - 1 + N / 2;
+        PS.ParticleVx(l_index) = -vprime;
+        PS.ParticleX(l_index) = m * ii + b;
+        PS.ParticleX(l_index) += 0.01*sin(k * PS.ParticleX(l_index) + M_PI / 2.0);
+    }
+    return status;
+}
+
+// Initialize a Maxwellian Population with a specific FWHM
+size_t ParticleICsRandom(ParticleSpecies1d1v& PS, const double vprime){
+    size_t status = 0;
+    /* TODO */
+    return status;
+}
+
 // Wrapper for the specific particle configurations
 // Grid is needed to get relevant attributes, e.g., L
 size_t ParticleICs(ParticleSpecies1d1v& PS, Grid1d1v& Grid, const double vprime, const double dx, const string particleModeICs){
@@ -54,7 +85,9 @@ size_t ParticleICs(ParticleSpecies1d1v& PS, Grid1d1v& Grid, const double vprime,
     else if (particleModeICs == "uniform"){
         status = ParticleICsUniform(PS, Grid, vprime);
     }
-
+    else if (particleModeICs == "twostream"){
+        status = ParticleICsTwostream(PS, Grid, vprime);
+    }
     return status;
 }
 
