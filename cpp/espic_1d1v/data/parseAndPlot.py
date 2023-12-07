@@ -24,13 +24,14 @@ grid_df = pd.concat(grid_df_list, ignore_index=True)
 particle_df = pd.concat(particle_df_list, ignore_index=True)
 
 # Looks good here
-print(grid_df)
-print(particle_df)
+# print(grid_df)
+# print(particle_df)
 
 """
 Parse DataFrames
 """
 # Integrate electric field and particle kinetic energy
+
 
 # 
 
@@ -53,9 +54,9 @@ v_max = particle_df_list[0]['v_i'].max()
 
 def update(frame):
     ax.clear()
-    particle_df = particle_df_list[frame]
-    N = particle_df['i'].max()
-    distFunc = particle_df['v_i']
+    particle_df_frame = particle_df_list[frame]
+    N = particle_df_frame['i'].max()
+    distFunc = particle_df_frame['v_i']
     hist = distFunc.hist(ax=ax, bins=50) 
     ax.set_xlim([v_min, v_max])
     # ax.set_ylim([0, 1])

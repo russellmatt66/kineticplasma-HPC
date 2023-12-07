@@ -1,13 +1,5 @@
 # Overview
-Tests and miscellaneous utility scripts for writing the report, and validating the code.
-
-# Validation
-Here are the cases to run to validate the code:
-(1) Electron motion
-- Show the correct oscillatory motion of a pair of electrons in phasespace
-
-(2) Langmuir Waves
-- Show the correct behavior of a population of electrons
+Tests and miscellaneous utility scripts.
 
 # Tests
 Here are the modules that still need testing:
