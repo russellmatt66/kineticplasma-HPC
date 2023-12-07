@@ -12,7 +12,7 @@ cpp-petsc/
 # Current Tasks
 espic_1d1v/
 - Write Python to visualize data from simulation.
-- Validate code and finish writing up report.
+- Validate code, and finish writing up report.
 - Benchmark individual components for a single timestep to determine piechart of time.  
 
 cpp-petsc/
