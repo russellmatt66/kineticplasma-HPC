@@ -1,7 +1,7 @@
-N=1024
-Nx=2048
+N=64
+Nx=32
 Nt=100
 dtcoeff=0.05
 W=1
-vprime=0.05
+vprime=0.1
 particleICs=uniform
