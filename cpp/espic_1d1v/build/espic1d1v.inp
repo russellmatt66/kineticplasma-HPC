@@ -3,5 +3,5 @@ Nx=32
 Nt=100
 dtcoeff=0.05
 W=1
-vprime=0.01
+vprime=0.1
 particleICs=uniform
