@@ -16,5 +16,6 @@ cpp/espic_1d1v/benchmarking/build/*
 !cpp/espic_1d1v/benchmarking/build/parsePerfData.py
 cpp/espic_1d1v/build/*
 !cpp/espic_1d1v/build/espic1d1v.inp
+!cpp/espic_1d1v/build/espic1d1v
 
 rust/target/*
