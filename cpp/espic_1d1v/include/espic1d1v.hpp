@@ -111,7 +111,8 @@ size_t FieldSolveMatrix(const Eigen::SparseMatrix<double>& A, Grid1d1v& Grid, Ei
     }  
     
     // Boundary conditions - see writeup
-    rhoEig[A.rows()-1] = 0.0;
+    // NOPE IT'S WRONG
+    // rhoEig[A.rows()-1] = 0.0; 
 
     // Solve A*phi = -rho for phi
     Eigen::SparseLU<Eigen::SparseMatrix<double>> solver;
