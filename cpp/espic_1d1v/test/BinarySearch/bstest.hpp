@@ -69,6 +69,10 @@ std::vector<bool> randomParticles(std::ofstream& ResultsLog, Grid1d1v& Grid, Par
 std::vector<bool> leftGridpoint(std::ofstream& ResultsLog, Grid1d1v& Grid, ParticleSpecies1d1v& Particles){
     size_t N = Particles.getParticleNum();
 
+    for (size_t i = 0; i < N-1; i++){
+        Particles.ParticleX(i) = Grid.Xgrid(i);
+    }
+
     size_t lsidx, bsidx; 
     std::vector<bool> foundSame(N);
     for (size_t i = 0; i < N; i++){
@@ -86,7 +90,11 @@ std::vector<bool> leftGridpoint(std::ofstream& ResultsLog, Grid1d1v& Grid, Parti
 // Case 4: Single particle on each right gridpoint
 std::vector<bool> rightGridpoint(std::ofstream& ResultsLog, Grid1d1v& Grid, ParticleSpecies1d1v& Particles){
     size_t N = Particles.getParticleNum();
-    
+
+    for (size_t i = 0; i < N-1; i++){
+        Particles.ParticleX(i) = Grid.Xgrid(i+1);
+    }
+
     size_t lsidx, bsidx; 
     std::vector<bool> foundSame(N);
     for (size_t i = 0; i < N; i++){

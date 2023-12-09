@@ -9,7 +9,7 @@
 
 // Driver code for testing Binary Search
 int main(int argc, char *argv[]){
-    std::ofstream testlog, resultslog;
+    std::ofstream testlog("testsPassed.log"), resultslog("data.log");
 
     size_t Nx = std::stoi(argv[2]); // gonna test from 32 to 8192
     double x_min = -M_PI, x_max = M_PI;
@@ -47,7 +47,8 @@ int main(int argc, char *argv[]){
 
     // Left gridpoint
     testlog << "Beginning leftGridpoint test." << std::endl; 
-    foundSame = leftGridpoint();
+    ParticleSpecies1d1v testParticles(Nx - 1,-1.0); // need N = Nx - 1
+    foundSame = leftGridpoint(resultslog, testGrid, testParticles);
     bool passed = true;
     for (int ib = 0; ib < foundSame.size(); ib++){
         if (!foundSame[ib]){
@@ -56,9 +57,9 @@ int main(int argc, char *argv[]){
     }
     testlog << "leftGridpoint: " << passed << std::endl;
 
-    // Right gridpoint
+    // Right gridpoint - N = Nx
     testlog << "Beginning rightGridpoint test." << std::endl; 
-    foundSame = rightGridpoint();
+    foundSame = rightGridpoint(resultslog, testGrid, testParticles);
     bool passed = true;
     for (int ib = 0; ib < foundSame.size(); ib++){
         if (!foundSame[ib]){
