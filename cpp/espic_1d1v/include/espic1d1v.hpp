@@ -38,6 +38,8 @@ size_t ParticleWeight(ParticleSpecies1d1v &PS, Grid1d1v &Grid, const size_t W, c
     double dist_left, dist_right;
     const double Q_particle = PS.getParticleQ();
 
+    Grid.ZeroOutRho();
+    
     for (size_t ii = 0; ii < N; ii++){
         j_left = findParticle(PS.ParticleX(ii), Grid.getXgrid());
         PS.XFound(ii) = j_left;
