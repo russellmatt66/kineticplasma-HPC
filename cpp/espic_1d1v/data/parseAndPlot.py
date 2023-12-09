@@ -66,8 +66,7 @@ for it in time_vec:
 Plot output
 """
 # Create plot of energy history
-# - Looks weird for N = 1024, Nx = 2048
-# - Takes strange dips
+# - Doesn't look correct
 energyFig, energyAx = plt.subplots()
 
 energyAx.plot(time_vec, TotalE, label='TotalE')
@@ -77,7 +76,17 @@ energyAx.legend()
 
 # Create movie of grid field and potential
 
+
+# Create plot of phase-space
+phaseFig, phaseAx = plt.subplots()
+
+ParticleX = particle_df['x_i']
+ParticleVx = particle_df['v_i']
+
+phaseAx.scatter(ParticleX, ParticleVx)
+
 # Create movie of phase-space
+
 
 # Create movie of distribution function
 # Need to make histogram into distribution function
