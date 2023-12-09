@@ -27,7 +27,7 @@ int main(){
     
     // Parse input file
     simlog << "Parsing input file" << std::endl;
-    std::unordered_map<string, ParameterValue> inputParameters = parseInputFile("espic1d1v.inp");
+    std::unordered_map<string, ParameterValue> inputParameters = parseInputFile("../src/espic1d1v.inp");
     size_t N = std::get<size_t>(inputParameters["N"]);
     size_t Nx = std::get<size_t>(inputParameters["Nx"]);
     size_t Nt = std::get<size_t>(inputParameters["Nt"]);
