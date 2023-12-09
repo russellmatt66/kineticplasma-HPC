@@ -34,12 +34,16 @@ size_t findParticle(const double particlePos, const std::vector<double> &x_grid)
 Weight the particles to the grid.
 */
 size_t ParticleWeight(ParticleSpecies1d1v &PS, Grid1d1v &Grid, const size_t W, const size_t Nx, const size_t N, const double dx){
-    size_t j_left, j_right, status = 0;
+    size_t j_left, j_right; 
+    size_t status = 0;
     double dist_left, dist_right;
     const double Q_particle = PS.getParticleQ();
 
-    Grid.ZeroOutRho();
-    
+    // Grid.ZeroOutRho();
+    for (size_t ij = 0; ij < Nx; ij++){
+        Grid.RhoX(ij) = 0.0;
+    }
+
     for (size_t ii = 0; ii < N; ii++){
         j_left = findParticle(PS.ParticleX(ii), Grid.getXgrid());
         PS.XFound(ii) = j_left;
