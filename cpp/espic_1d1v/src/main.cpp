@@ -84,6 +84,7 @@ int main(){
         t += dt;
         Grid.ZeroOutRho(); // Don't want to accumulate excess charge density between timesteps
         routineFlag = ParticleWeight(electrons,Grid,W,Nx,N,dx);
+        simlog << "Total charge on grid is: " << Grid.calculate_Qnet() << std::endl;
         routineFlag = FieldSolveMatrix(A,Grid,rhoEig,phiEig,dx,Nx);
         routineFlag = ForceWeight(electrons,Grid,N,W,dx); 
         routineFlag = CollectData(electrons,Grid,it);
