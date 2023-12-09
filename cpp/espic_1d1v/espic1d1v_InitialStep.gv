@@ -1,0 +1,60 @@
+digraph espic1d1v {
+    inputFile -> "parseInputFile( )";
+    "main()" -> "parseInputFile( )" -> N;
+    "parseInputFile( )" -> Nx;
+    "parseInputFile( )" -> Nt;
+    "parseInputFile( )" -> W;
+    "parseInputFile( )" -> vprime;
+    "parseInputFile( )" -> particleICs;
+    "parseInputFile( )" -> dtcoeff;
+
+    // Create the particles and grid
+    N -> electrons;
+    Nx -> Grid;
+    Grid -> L;
+    Grid -> dx;
+
+    // Simulation Timing
+    L -> omega_p;
+    N -> omega_p;
+    omega_p -> tau_p -> dt;
+    dtcoeff -> dt;
+
+    vprime -> "InitialConditions( )";
+    particleICs -> "InitialConditions( )";
+    electrons -> "InitialConditions( )" -> "ParticleWeight( )" -> "ForceWeight( )" -> "CollectData( )";
+	"ForceWeight( )" -> "ParticlePush( )";
+
+    Grid -> "InitialConditions( )" -> "ParticleWeight( )" -> "FieldSolveMatrix( )" -> "ForceWeight( )" -> "CollectData( )";
+	"ForceWeight( )" -> "ParticlePush( )";
+    
+	N -> "ParticlePush( )";
+	Nx -> "ParticlePush( )";
+	dt -> "ParticlePush( )";
+	dx -> "ParticlePush( )";
+
+	W -> "ParticleWeight( )";
+    Nx -> "ParticleWeight( )";
+    N -> "ParticleWeight( )";
+    dx -> "ParticleWeight( )";
+
+    Nx -> A [label="Nx-1", labeldistance=2.0];
+    A -> "BuildSparseLapl( )";
+    dx -> "BuildSparseLapl( )";
+    A -> rhoEig;
+    A -> phiEig;  
+
+    "BuildSparseLapl( )" -> "FieldSolveMatrix( )";
+    rhoEig -> "FieldSolveMatrix( )";
+	phiEig -> "FieldSolveMatrix( )";
+	dx -> "FieldSolveMatrix( )";
+	Nx -> "FieldSolveMatrix( )";
+
+	N -> "ForceWeight( )";
+	W -> "ForceWeight( )";
+	dx -> "ForceWeight( )";
+
+    "ParticlePush( )" -> "PIC Loop";
+    "CollectData( )" -> "../data/Grid/Grid_0.csv";
+    "CollectData( )" -> "../data/Particles/Particles_0.csv";
+}

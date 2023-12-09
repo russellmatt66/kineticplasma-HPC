@@ -78,8 +78,6 @@ int main(){
     }
     routineFlag = ParticlePush(electrons,Grid,N,Nx,dt,dx);
 
-
-
     // PIC Loop
     for (size_t it = 1; it < Nt; it++){
         simlog << "Starting timestep " << it << std::endl;
