@@ -34,10 +34,12 @@ class Grid1d1v{
 
         const std::vector<double>& getXgrid() const { return x_grid; }
         const std::vector<double>& getRhoX() const { return rho_x; }
+        const std::vector<double>& getPhiX() const {return phi_x;}
         const std::vector<double>& getEX() const { return E_x; }
 
         std::vector<double>& getXgrid() { return x_grid; }
         std::vector<double>& getRhoX() { return rho_x; }
+        std::vector<double>& getPhiX() { return phi_x;}
         std::vector<double>& getEX() { return E_x; }
 
         // Zero out the charge density
