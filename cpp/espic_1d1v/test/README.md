@@ -13,3 +13,9 @@ Here are the modules that still need testing:
 # Directory Structure
 ParticleShape/
 - Visualizes shape functions up to 6th-order using discrete convolution
+
+BinarySearch/
+- Test findParticle()
+
+PoissonSolve/
+- Test FieldSolveMatrix()

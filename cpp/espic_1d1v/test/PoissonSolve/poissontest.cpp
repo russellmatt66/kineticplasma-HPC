@@ -25,47 +25,52 @@ int main(int argc, char *argv[]){
     Eigen::VectorXd rhoEig(A.rows()), phiEig(A.rows());
 
     // Case 1: rho(x) = sin(x)
-    std::ofstream sinLog("/data/sin.csv");
+    std::ofstream sinLog("./data/sin.csv");
+    sinLog << "x_j," << "rho_x," << "phi_x" << std::endl;
     for (size_t j = 0; j < Nx; j++){
         testGrid.RhoX(j) = sin(testGrid.Xgrid(j));
-        /* Stream data into csv */
     }
-
     routineFlag = FieldSolveMatrix(A, testGrid, rhoEig, phiEig, dx, Nx);
-    /* Stream data into csv */
+    /* Stream output into csv */
+    for (size_t j = 0; j < Nx; j++){
+        sinLog << testGrid.Xgrid(j) << "," << testGrid.RhoX(j) << "," << testGrid.PhiX(j) << std::endl;
+    }
 
     // Case 2: rho(x) = cos(x)
-    std::ofstream sinLog("/data/cos.csv");
-    /* Construct column headers */
+    std::ofstream cosLog("./data/cos.csv");
+    cosLog << "x_j," << "rho_x," << "phi_x" << std::endl;
     for (size_t j = 0; j < Nx; j++){
         testGrid.RhoX(j) = cos(testGrid.Xgrid(j));
-        /* Stream data into csv */
     }
-
     routineFlag = FieldSolveMatrix(A, testGrid, rhoEig, phiEig, dx, Nx);
-    /* Stream data into csv */
+    /* Stream output into csv */
+    for (size_t j = 0; j < Nx; j++){
+        cosLog << testGrid.Xgrid(j) << "," << testGrid.RhoX(j) << "," << testGrid.PhiX(j) << std::endl;
+    }
 
     // Case 3: rho(x) = x^2
-    std::ofstream paraLog("/data/parabola.csv");
-    /* Construct column headers */
+    std::ofstream paraLog("./data/parabola.csv");
+    paraLog << "x_j," << "rho_x," << "phi_x" << std::endl;
     for (size_t j = 0; j < Nx; j++){
         testGrid.RhoX(j) = pow(testGrid.Xgrid(j),2);
-        /* Stream data into csv */
+    }
+    routineFlag = FieldSolveMatrix(A, testGrid, rhoEig, phiEig, dx, Nx);
+    /* Stream output into csv */
+    for (size_t j = 0; j < Nx; j++){
+        paraLog << testGrid.Xgrid(j) << "," << testGrid.RhoX(j) << "," << testGrid.PhiX(j) << std::endl;
     }
 
-    routineFlag = FieldSolveMatrix(A, testGrid, rhoEig, phiEig, dx, Nx);
-    /* Stream data into csv */
-
     // Case 4: rho(x) = e^x
-    std::ofstream expLog("/data/exponential.csv");
-    /* Construct column headers */
+    std::ofstream expLog("./data/exponential.csv");
+    expLog << "x_j," << "rho_x," << "phi_x" << std::endl;
     for (size_t j = 0; j < Nx; j++){
         testGrid.RhoX(j) = exp(testGrid.Xgrid(j));
-        /* Stream data into csv */
     }   
-
     routineFlag = FieldSolveMatrix(A, testGrid, rhoEig, phiEig, dx, Nx);
-    /* Stream data into csv */
+    /* Stream output into csv */
+    for (size_t j = 0; j < Nx; j++){
+        expLog << testGrid.Xgrid(j) << "," << testGrid.RhoX(j) << "," << testGrid.PhiX(j) << std::endl;
+    }
 
     return 0;
 }
