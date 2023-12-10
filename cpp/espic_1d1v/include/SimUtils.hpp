@@ -52,16 +52,17 @@ size_t ParticleICsTwostream(ParticleSpecies1d1v& PS, Grid1d1v& Grid, const doubl
     // Streaming right: i \in [0, N/2 - 1]
     // Streaming left: i \in [N/2, N - 1]
     size_t l_index; 
+    k *= 2.0; // equivalent to changing wavelength of perturbation
     for (size_t ii = 0; ii < N / 2; ii++){
         // Streaming right
         PS.ParticleVx(ii) = vprime;
         PS.ParticleX(ii) =  m * ii + b;
-        PS.ParticleX(ii) += 0.01*sin(k * PS.ParticleX(ii));
+        PS.ParticleX(ii) += 0.00001*sin(k * PS.ParticleX(ii));
         // Streaming left
         l_index = ii - 1 + N / 2;
         PS.ParticleVx(l_index) = -vprime;
         PS.ParticleX(l_index) = m * ii + b;
-        PS.ParticleX(l_index) += 0.01*sin(k * PS.ParticleX(l_index) + M_PI / 2.0);
+        PS.ParticleX(l_index) += 0.00001*sin(k * PS.ParticleX(l_index) + M_PI / 2.0);
     }
     return status;
 }
