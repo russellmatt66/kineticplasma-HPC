@@ -6,6 +6,7 @@
 #include <variant>
 #include <string>
 #include <cstddef>
+#include <filesystem>
 
 #include <Eigen/Sparse>
 
@@ -18,6 +19,7 @@ using std::string;
 using ParameterValue = std::variant<size_t, double, string>;
 
 std::unordered_map<string, ParameterValue> parseInputFile(const string filename);
+void removeDataFiles(const string& dataFolder);
 
 int main(){
     size_t routineFlag;
@@ -25,6 +27,14 @@ int main(){
     simlog.open("espic1d1v.log");
     simlog << "Beginning simulation" << std::endl;
     
+    // Remove files from data/
+    string energyFolder = "../data/Energy/";
+    string gridFolder = "../data/Grid/";
+    string particleFolder = "../data/Particles/";
+    removeDataFiles(energyFolder);
+    removeDataFiles(gridFolder);
+    removeDataFiles(particleFolder);
+
     // Parse input file
     simlog << "Parsing input file" << std::endl;
     std::unordered_map<string, ParameterValue> inputParameters = parseInputFile("../src/espic1d1v.inp");
@@ -52,8 +62,18 @@ int main(){
 
     double omega_p = sqrt(N/L);
     double t = 0.0, tau_p = (2.0 * M_PI) / omega_p;
-    double dt = std::get<double>(inputParameters["dtcoeff"]) * tau_p;
+    double dtcoeff = std::get<double>(inputParameters["dtcoeff"]);
+    double dt = dtcoeff * tau_p;
     
+    // Stream input data to log
+    simlog << "N = " << N << std::endl;
+    simlog << "Nx = " << Nx << std::endl;
+    simlog << "Nt = " << Nt << std::endl;
+    simlog << "W = " << W << std::endl;
+    simlog << "vprime = " << vprime << std::endl;
+    simlog << "particleICS = " << particleICs << std::endl;
+    simlog << "dtcoeff = " << dtcoeff << std::endl;
+
     // Initialize Energy History file
     string energyString = "../data/Energy/EnergyHistory.csv";
     std::ofstream EnergyFile(energyString);
@@ -67,19 +87,23 @@ int main(){
     */ 
     simlog << "Performing initial PIC step" << std::endl;  
     routineFlag = ParticleWeight(electrons,Grid,W,Nx,N,dx);
+    simlog << "Initial particle weighting complete" << std::endl;
 
     // Build sparse matrix for electrostatic field solve
     // A is (Nx-1)x(Nx-1) because of a persistent bug when it was (Nx)x(Nx)
     Eigen::SparseMatrix<double> A(Nx-1,Nx-1); // Periodic Boundary Conditions so don't need last line 
     A.reserve(Eigen::VectorXi::Constant(Nx-1,3)); // Poisson's equation so triangular
     routineFlag = BuildSparseLapl(A,dx);
+    simlog << "Poisson solver initialized" << std::endl;
 
     // Electrostatic field solve with a sparse matrix
     Eigen::VectorXd rhoEig(A.rows()), phiEig(A.rows()); // Eigen needs its own containers for sparse solver
     routineFlag = FieldSolveMatrix(A,Grid,rhoEig,phiEig,dx,Nx);
+    simlog << "Initial field solve complete" << std::endl;
 
     // Weight grid electric field to particles, and then push 
-    routineFlag = ForceWeight(electrons,Grid,N,W,dx); 
+    routineFlag = ForceWeight(electrons,Grid,N,W,dx);
+    simlog << "Initial force weighting complete" << std::endl; 
     routineFlag = CollectData(electrons,Grid,0); // Collect the data before pushing
     routineFlag = CollectEnergyHistory(EnergyFile, electrons, Grid, Efield_squared, 0); // Energy history has a different structure 
 
@@ -139,4 +163,18 @@ std::unordered_map<string, ParameterValue> parseInputFile(const string filename)
         }
     }
     return parameters;
+}
+
+void removeDataFiles(const string& dataFolder){
+    namespace fs = std::filesystem;
+
+    try {
+        for (const auto& entry : fs::directory_iterator(dataFolder)) {
+            if (entry.is_regular_file()) {
+                fs::remove(entry.path());
+            }
+        }
+    } catch (const fs::filesystem_error& e) {
+        std::cerr << "Error accessing folder: " << e.what() << std::endl;
+    }
 }

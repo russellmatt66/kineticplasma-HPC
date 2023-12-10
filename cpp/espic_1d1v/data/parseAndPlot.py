@@ -56,6 +56,20 @@ ParticleVx = particle_df['v_i']
 phaseAx.scatter(ParticleX, ParticleVx)
 
 # Create movie of phase-space
+phaseMovieFig, phaseMovieAx = plt.subplots()
+
+v_min = particle_df['v_i'].min()
+v_max = particle_df['v_i'].max()
+
+def phaseUpdate(frame):
+    phaseMovieAx.clear()
+    current_df = particle_df_list[frame]
+    ParticleX = current_df['x_i']
+    ParticleVx = current_df['v_i']
+    phaseMovieAx.scatter(ParticleX, ParticleVx)
+    phaseMovieAx.set_ylim([v_min, v_max])
+
+animation = FuncAnimation(phaseMovieFig, phaseUpdate, frames=len(particle_df_list), interval=200, repeat=False)
 
 
 # Create movie of distribution function
