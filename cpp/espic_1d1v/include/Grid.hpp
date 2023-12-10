@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <cstddef>
+#include <cmath>
 
 class Grid1d1v{
     public:

@@ -31,13 +31,9 @@ int main(int argc, char *argv[]){
     testlog << "Cell: " << passed << std::endl;
 
     // Random
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<double> ufmrl_dist(x_min, x_max);
-
     testlog << "Beginning Random test." << std::endl; 
-    foundSame = randomParticles(resultslog, testGrid, testParticles, ufmrl_dist, gen);
-    bool passed = true;
+    foundSame = randomParticles(resultslog, testGrid, testParticles, x_min, x_max);
+    passed = true;
     for (int ib = 0; ib < foundSame.size(); ib++){
         if (!foundSame[ib]){
             passed = false;
@@ -47,9 +43,9 @@ int main(int argc, char *argv[]){
 
     // Left gridpoint
     testlog << "Beginning leftGridpoint test." << std::endl; 
-    ParticleSpecies1d1v testParticles(Nx - 1,-1.0); // need N = Nx - 1
-    foundSame = leftGridpoint(resultslog, testGrid, testParticles);
-    bool passed = true;
+    ParticleSpecies1d1v testParticles_Nxm1(Nx - 1,-1.0); // need N = Nx - 1
+    foundSame = leftGridpoint(resultslog, testGrid, testParticles_Nxm1);
+    passed = true;
     for (int ib = 0; ib < foundSame.size(); ib++){
         if (!foundSame[ib]){
             passed = false;
@@ -59,8 +55,8 @@ int main(int argc, char *argv[]){
 
     // Right gridpoint - N = Nx
     testlog << "Beginning rightGridpoint test." << std::endl; 
-    foundSame = rightGridpoint(resultslog, testGrid, testParticles);
-    bool passed = true;
+    foundSame = rightGridpoint(resultslog, testGrid, testParticles_Nxm1);
+    passed = true;
     for (int ib = 0; ib < foundSame.size(); ib++){
         if (!foundSame[ib]){
             passed = false;

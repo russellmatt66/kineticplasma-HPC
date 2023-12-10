@@ -45,8 +45,13 @@ std::vector<bool> Cell(std::ofstream& ResultsLog, Grid1d1v& Grid, ParticleSpecie
 }
 
 // Case 2: Randomly distributed particles
-std::vector<bool> randomParticles(std::ofstream& ResultsLog, Grid1d1v& Grid, ParticleSpecies1d1v& Particles, const std::uniform_real_distribution<double> ufmrl_dist, const std::mt19937 gen){
+std::vector<bool> randomParticles(std::ofstream& ResultsLog, Grid1d1v& Grid, ParticleSpecies1d1v& Particles, const double x_min, const double x_max){
     size_t N = Particles.getParticleNum();
+    
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<double> ufmrl_dist(x_min, x_max);
+
     for (size_t i = 0; i < N; i++){
         Particles.ParticleX(i) = ufmrl_dist(gen);
     }

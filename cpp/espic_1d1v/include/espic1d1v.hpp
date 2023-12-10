@@ -18,7 +18,7 @@ size_t findParticle(const double particlePos, const std::vector<double> &x_grid)
     size_t index; // gridpoint to the left of where particle is found, i.e., the cell
     while (low <= high){
         index = floor((high + low) / 2);
-        if (x_grid[index] <= particlePos && x_grid[index + 1] >= particlePos) {
+        if (x_grid[index] <= particlePos && x_grid[index + 1] > particlePos) {
             return index;
         } else if (x_grid[index] > particlePos) {
             high = index;
