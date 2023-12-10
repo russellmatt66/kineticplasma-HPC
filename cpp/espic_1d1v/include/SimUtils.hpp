@@ -139,6 +139,7 @@ size_t CollectData(const ParticleSpecies1d1v& PS, const Grid1d1v& Grid, const si
 }
 
 size_t CollectEnergyHistory(std::ofstream& EnergyFile, const ParticleSpecies1d1v& Particles, const Grid1d1v& Grid, std::vector<double> E_sq, const size_t timelevel){
+    size_t status = 0;
     double PE = 0, KE = 0, E = 0; // potential (electrostatic field) energy, particle kinetic energy, total energy
 
     // Compute field energy pointwise 
@@ -160,8 +161,12 @@ size_t CollectEnergyHistory(std::ofstream& EnergyFile, const ParticleSpecies1d1v
         KE += 0.5 * Particles.ParticleVx(i) * Particles.ParticleVx(i);
     }
 
+    E = PE + KE;
+    
     // Stream data to Energy file
     EnergyFile << timelevel << "," << KE << "," << PE << "," << E << std::endl;
+
+    return status;
 }
 
 #endif

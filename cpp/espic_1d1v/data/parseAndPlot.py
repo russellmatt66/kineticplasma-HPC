@@ -9,6 +9,7 @@ Read datafiles in Grid/ and Particles/
 """
 grid_path = 'Grid'
 particle_path = 'Particles'
+energy_path = 'Energy'
 
 # Creates a list of all relevant files based on the argument
 grid_files = glob.glob(grid_path + "/*.csv")
@@ -22,6 +23,7 @@ particle_df_list = [pd.read_csv(datafile) for datafile in particle_files]
 
 grid_df = pd.concat(grid_df_list, ignore_index=True)
 particle_df = pd.concat(particle_df_list, ignore_index=True)
+energy_df = pd.read_csv(energy_path + "/EnergyHistory.csv")
 
 # Looks good here
 # print(grid_df)
@@ -36,6 +38,11 @@ Parse DataFrames
 Plot output
 """
 # Create plot of energy history
+energyFig, energyAx = plt.subplots()
+
+energyAx.plot(energy_df['n'],energy_df['KE'])
+energyAx.plot(energy_df['n'],energy_df['PE'])
+energyAx.plot(energy_df['n'],energy_df['E'])
 
 # Create movie of grid field and potential
 
