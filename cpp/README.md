@@ -12,8 +12,11 @@ cpp-petsc/
 # Current Tasks
 espic_1d1v/
 - Write Python to visualize data from simulation.
+-- Calculate energy history in C++
 - Validate code, and finish writing up report.
 - Benchmark individual components for a single timestep to determine piechart of time.  
+- Test Poisson Solver
+-- Implement iterative solver to compare
 
 cpp-petsc/
 - Learn how to solve Poisson's equation on a structured grid with PETSc.

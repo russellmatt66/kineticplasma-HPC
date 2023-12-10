@@ -1,14 +1,17 @@
 # Overview
 Tests and miscellaneous utility scripts.
 
-# Tests
+# Tests 
 Here are the modules that still need testing:
 
-(1) Charge-weighting 
-- Basically, test that the binary search works
-
-(2) Field Solve
+(1) Field Solve
 - Compare output with various analytical solutions
+- Test sine and cosine harmonics
+- Test polynomials
+
+# Results
+findParticle() {Binary Search}
+- All tests passsed
 
 # Directory Structure
 ParticleShape/
@@ -18,4 +21,5 @@ BinarySearch/
 - Test findParticle()
 
 PoissonSolve/
-- Test FieldSolveMatrix()
+- Test sine and cosine harmonics
+- Test polynomial degrees
