@@ -9,8 +9,8 @@
 #include <fstream>
 #include <cstddef>
 
-#include "../../include/Grid.hpp"
-#include "../../include/espic1d1v.hpp"
+#include "../../../include/Grid.hpp"
+#include "../../../include/espic1d1v.hpp"
 #include "oldpoisson.hpp" // field solver from original code
 
 // slight refactor of field solve from original code: Vector -> std::vector<double>
