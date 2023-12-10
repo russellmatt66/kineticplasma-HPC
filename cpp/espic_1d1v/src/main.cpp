@@ -54,6 +54,14 @@ int main(){
     double t = 0.0, tau_p = (2.0 * M_PI) / omega_p;
     double dt = std::get<double>(inputParameters["dtcoeff"]) * tau_p;
     
+    // Initialize Energy History file
+    string energyString = "../data/Energy/EnergyHistory.csv";
+    std::ofstream EnergyFile(energyString);
+    if (EnergyFile.is_open()){
+        EnergyFile << "n,KE,PE,E" << std::endl;
+    }
+    std::vector<double> Efield_squared(Nx,0.0); // use this to compute field energy
+
     /*
     Initial PIC step
     */ 
@@ -73,7 +81,10 @@ int main(){
     // Weight grid electric field to particles, and then push 
     routineFlag = ForceWeight(electrons,Grid,N,W,dx); 
     routineFlag = CollectData(electrons,Grid,0); // Collect the data before pushing
-    for (size_t ii = 0; ii < N; ii++){ // half-step backwards to start Leapfrog scheme
+    routineFlag = CollectEnergyHistory(EnergyFile, electrons, Grid, Efield_squared, 0); // Energy history has a different structure 
+
+    // half-step backwards to start Leapfrog scheme
+    for (size_t ii = 0; ii < N; ii++){ 
         electrons.ParticleVx(ii) = electrons.ParticleVx(ii) - 0.5*dt*electrons.ParticleEx(ii);
     }
     routineFlag = ParticlePush(electrons,Grid,N,Nx,dt,dx);
@@ -88,6 +99,7 @@ int main(){
         routineFlag = FieldSolveMatrix(A,Grid,rhoEig,phiEig,dx,Nx);
         routineFlag = ForceWeight(electrons,Grid,N,W,dx); 
         routineFlag = CollectData(electrons,Grid,it);
+        routineFlag = CollectEnergyHistory(EnergyFile, electrons, Grid, Efield_squared, it);
         routineFlag = ParticlePush(electrons,Grid,N,Nx,dt,dx);
         simlog << "Timestep " << it << " complete" << std::endl;
     }

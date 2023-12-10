@@ -107,6 +107,8 @@ size_t GridICs(Grid1d1v& Grid, const string gridModeICs){
     return status;
 }
 
+
+
 // Collect Data
 size_t CollectData(const ParticleSpecies1d1v& PS, const Grid1d1v& Grid, const size_t timelevel){
     size_t status = 0;
@@ -134,6 +136,32 @@ size_t CollectData(const ParticleSpecies1d1v& PS, const Grid1d1v& Grid, const si
     }
 
     return status;
+}
+
+size_t CollectEnergyHistory(std::ofstream& EnergyFile, const ParticleSpecies1d1v& Particles, const Grid1d1v& Grid, std::vector<double> E_sq, const size_t timelevel){
+    double PE = 0, KE = 0, E = 0; // potential (electrostatic field) energy, particle kinetic energy, total energy
+
+    // Compute field energy pointwise 
+    size_t Nx = Grid.getNx();
+    for (size_t j = 0; j < Nx; j++){
+        E_sq[j] = 0.5 * Grid.EX(j) * Grid.EX(j);
+    }
+
+    // Trapezoidal integration of field energy
+    double dx = Grid.getDX();
+    for (size_t j = 0; j < Nx - 1; j++){
+        PE += 0.5 * (E_sq[j] + E_sq[j+1]); 
+    }
+    PE *= dx;
+
+    // Compute particle kinetic energy
+    size_t N = Particles.getParticleNum();
+    for (size_t i = 0; i < N; i++){
+        KE += 0.5 * Particles.ParticleVx(i) * Particles.ParticleVx(i);
+    }
+
+    // Stream data to Energy file
+    EnergyFile << timelevel << "," << KE << "," << PE << "," << E << std::endl;
 }
 
 #endif

@@ -30,49 +30,12 @@ particle_df = pd.concat(particle_df_list, ignore_index=True)
 """
 Parse DataFrames
 """
-# Integrate electric field and particle kinetic energy
-def trapezoidalIntegration(f: pd.Series, dx: float) -> float:
-    sum = 0.0
-    for j in np.arange(0,f.size - 1): # This is getting short-circuited
-        sum += 0.5 * (f.values[j] + f.values[j+1])
-    sum *= dx
-    print(sum)
-    return sum
-
-# Appending to lists is just the simplest solution I can think of
-ElectricEnergy = []
-ParticleKineticEnergy = []
-TotalE = []
-
-first_grid_df = grid_df_list[0]
-dx = (first_grid_df['x_j'].max() - first_grid_df['x_j'].min()) / (first_grid_df['j'].max()) 
-print(dx)
-
-x_grid = list(first_grid_df['x_j'])
-
-time_vec = np.arange(len(grid_df_list))
-
-# Probably slow
-for it in time_vec:
-    current_grid_df = grid_df_list[it]
-    current_particle_df = particle_df_list[it]
-    ElectricEnergy.append(trapezoidalIntegration(0.5 * current_grid_df['E_j'] * current_grid_df['E_j'],dx)) # <- Core problem here! 'numpy.float64' 
-    KE = 0.5 * current_particle_df['v_i'].dot(current_particle_df['v_i']) # 
-    ParticleKineticEnergy.append(KE)
-    TotalE.append(KE + ElectricEnergy[it])
 
 
 """
 Plot output
 """
 # Create plot of energy history
-# - Doesn't look correct
-energyFig, energyAx = plt.subplots()
-
-energyAx.plot(time_vec, TotalE, label='TotalE')
-energyAx.plot(time_vec, ElectricEnergy, label='E')
-energyAx.plot(time_vec, ParticleKineticEnergy, label='KE')
-energyAx.legend()
 
 # Create movie of grid field and potential
 
