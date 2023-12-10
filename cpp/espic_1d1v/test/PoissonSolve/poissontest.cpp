@@ -32,9 +32,10 @@ int main(int argc, char *argv[]){
     routineFlag = BuildSparseLapl(A,dx);
     Eigen::VectorXd rhoEig(A.rows()), phiEig(A.rows());
 
+    /* Testing should be refactored to have a wrapper around it */
     // Case 1: rho(x) = sin(x)
     std::ofstream sinLog("./data/sin.csv");
-    sinLog << "x_j," << "rho_x," << "phi_x," << "phi_x_old," << "phi_original" << std::endl;
+    sinLog << "x_j," << "rho_x," << "phi_x," << "phi_x_old," << "phi_original," << "E_j" << std::endl;
     for (size_t j = 0; j < Nx; j++){
         testGrid.RhoX(j) = sin(testGrid.Xgrid(j));
         oldGrid.RhoX(j) = sin(oldGrid.Xgrid(j));
@@ -45,12 +46,12 @@ int main(int argc, char *argv[]){
     routineFlag = FieldSolveMatrix(A, rhoEig, phiEig, dx, rho, phi, E_grid);
     /* Stream output into csv */
     for (size_t j = 0; j < Nx; j++){
-        sinLog << testGrid.Xgrid(j) << "," << testGrid.RhoX(j) << "," << testGrid.PhiX(j) << "," << oldGrid.PhiX(j) << "," << phi(j) << std::endl;
+        sinLog << testGrid.Xgrid(j) << "," << testGrid.RhoX(j) << "," << testGrid.PhiX(j) << "," << oldGrid.PhiX(j) << "," << phi(j) << "," << testGrid.EX(j) << std::endl;
     }
 
     // Case 2: rho(x) = cos(x)
     std::ofstream cosLog("./data/cos.csv");
-    cosLog << "x_j," << "rho_x," << "phi_x," << "phi_x_old," << "phi_original" << std::endl;
+    cosLog << "x_j," << "rho_x," << "phi_x," << "phi_x_old," << "phi_original," << "E_j" << std::endl;
     for (size_t j = 0; j < Nx; j++){
         testGrid.RhoX(j) = cos(testGrid.Xgrid(j));
         oldGrid.RhoX(j) = cos(oldGrid.Xgrid(j));
@@ -61,12 +62,12 @@ int main(int argc, char *argv[]){
     routineFlag = FieldSolveMatrix(A, rhoEig, phiEig, dx, rho, phi, E_grid);
     /* Stream output into csv */
     for (size_t j = 0; j < Nx; j++){
-        cosLog << testGrid.Xgrid(j) << "," << testGrid.RhoX(j) << "," << testGrid.PhiX(j) << "," << oldGrid.PhiX(j) << "," << phi(j) << std::endl;
+        cosLog << testGrid.Xgrid(j) << "," << testGrid.RhoX(j) << "," << testGrid.PhiX(j) << "," << oldGrid.PhiX(j) << "," << phi(j) << "," << testGrid.EX(j) << std::endl;
     }
 
     // Case 3: rho(x) = x^2
     std::ofstream paraLog("./data/parabola.csv");
-    paraLog << "x_j," << "rho_x," << "phi_x," << "phi_x_old," << "phi_original" << std::endl;
+    paraLog << "x_j," << "rho_x," << "phi_x," << "phi_x_old," << "phi_original," << "E_j" << std::endl;
     for (size_t j = 0; j < Nx; j++){
         testGrid.RhoX(j) = pow(testGrid.Xgrid(j),2);
         oldGrid.RhoX(j) = pow(oldGrid.Xgrid(j),2);
@@ -77,12 +78,12 @@ int main(int argc, char *argv[]){
     routineFlag = FieldSolveMatrix(A, rhoEig, phiEig, dx, rho, phi, E_grid);
     /* Stream output into csv */
     for (size_t j = 0; j < Nx; j++){
-        paraLog << testGrid.Xgrid(j) << "," << testGrid.RhoX(j) << "," << testGrid.PhiX(j) << "," << oldGrid.PhiX(j) << "," << phi(j) << std::endl;
+        paraLog << testGrid.Xgrid(j) << "," << testGrid.RhoX(j) << "," << testGrid.PhiX(j) << "," << oldGrid.PhiX(j) << "," << phi(j) << "," << testGrid.EX(j) << std::endl;
     }
 
     // Case 4: rho(x) = e^x
     std::ofstream expLog("./data/exponential.csv");
-    expLog << "x_j," << "rho_x," << "phi_x," << "phi_x_old," << "phi_original" << std::endl;
+    expLog << "x_j," << "rho_x," << "phi_x," << "phi_x_old," << "phi_original," << "E_j" << std::endl;
     for (size_t j = 0; j < Nx; j++){
         testGrid.RhoX(j) = exp(testGrid.Xgrid(j));
         oldGrid.RhoX(j) = exp(oldGrid.Xgrid(j));
@@ -93,7 +94,7 @@ int main(int argc, char *argv[]){
     routineFlag = FieldSolveMatrix(A, rhoEig, phiEig, dx, rho, phi, E_grid);
     /* Stream output into csv */
     for (size_t j = 0; j < Nx; j++){
-        expLog << testGrid.Xgrid(j) << "," << testGrid.RhoX(j) << "," << testGrid.PhiX(j) << "," << oldGrid.PhiX(j) << "," << phi(j) << std::endl;
+        expLog << testGrid.Xgrid(j) << "," << testGrid.RhoX(j) << "," << testGrid.PhiX(j) << "," << oldGrid.PhiX(j) << "," << phi(j) << "," << testGrid.EX(j) << std::endl;
     }
 
     return 0;
