@@ -74,7 +74,7 @@ def phaseUpdate(frame):
     current_df = particle_df_list[frame]
     ParticleX = current_df['x_i']
     ParticleVx = current_df['v_i']
-    phaseMovieAx.scatter(ParticleX, ParticleVx)
+    phaseMovieAx.scatter(ParticleX, ParticleVx, c=colors)
     phaseMovieAx.set_ylim([v_min, v_max])
 
 animation = FuncAnimation(phaseMovieFig, phaseUpdate, frames=len(particle_df_list), interval=200, repeat=False)
