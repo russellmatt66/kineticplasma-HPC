@@ -1,7 +1,8 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
 import glob
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
 
 from matplotlib.animation import FuncAnimation
 """
@@ -30,9 +31,13 @@ energy_df = pd.read_csv(energy_path + "/EnergyHistory.csv")
 # print(particle_df)
 
 """
-Parse DataFrames
+Determine colormap
 """
-
+N = particle_df['i'].max()+1
+cmap = plt.cm.get_cmap('plasma', N)
+colors = [cmap(i) for i in range(N)]
+hex_strings = [mcolors.to_hex(color) for color in colors] # '#rrggbb'
+hex_colors = [hex_str[:].upper() for hex_str in hex_strings] # '#RRGGBB'
 
 """
 Plot output
@@ -53,7 +58,10 @@ phaseFig, phaseAx = plt.subplots()
 ParticleX = particle_df['x_i']
 ParticleVx = particle_df['v_i']
 
-phaseAx.scatter(ParticleX, ParticleVx)
+for i in range(N):
+    ParticleX = particle_df_list[i]['x_i']
+    ParticleVx = particle_df_list[i]['v_i']
+    phaseAx.scatter(ParticleX, ParticleVx, c=colors)
 
 # Create movie of phase-space
 phaseMovieFig, phaseMovieAx = plt.subplots()
